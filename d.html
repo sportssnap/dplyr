@@ -34,13 +34,13 @@
 
     #dplayer {
       width: 100%;
-      height: auto; /* Allow height to adjust based on video's native aspect ratio */
+      height: auto;
     }
 
     #dplayer video {
       width: 100%;
-      height: auto; /* Preserve video's native aspect ratio */
-      object-fit: contain; /* Ensure video fits without cropping or stretching */
+      height: auto;
+      object-fit: contain;
     }
 
     .custom-overlay {
@@ -98,7 +98,6 @@
       100% { transform: translate(-50%, -50%) rotate(360deg); }
     }
 
-    /* Custom DPlayer controls styling */
     .dplayer .dplayer-controller {
       background: rgba(0, 0, 0, 0.8);
     }
@@ -122,22 +121,21 @@
       transform: scale(1.1);
     }
 
-    /* Responsive design */
     @media (max-width: 768px) {
       #dplayer-container {
         margin: 10px;
       }
-      
+
       .logo-overlay {
         top: 10px;
         right: 10px;
         padding: 6px 10px;
       }
-      
+
       .logo-overlay img {
         height: 20px;
       }
-      
+
       .bottom-text {
         font-size: 12px;
         padding: 6px 12px;
@@ -154,16 +152,27 @@
   <script src="https://cdn.jsdelivr.net/npm/hls.js@1.5.15/dist/hls.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/dplayer@1.27.0/dist/DPlayer.min.js"></script>
   <script>
+    function getVideoUrlFromParam() {
+      const urlParams = new URLSearchParams(window.location.search);
+      return urlParams.get('sportssnap');
+    }
+
     class VideoPlayer {
       constructor() {
         this.hlsInstance = null;
         this.container = document.getElementById('dplayer');
         this.spinner = document.getElementById('loading-spinner');
         this.player = null;
+        this.videoUrl = getVideoUrlFromParam();
         this.init();
       }
 
       init() {
+        if (!this.videoUrl) {
+          alert("No video URL found in ?sportssnap= parameter.");
+          return;
+        }
+
         this.player = new DPlayer({
           container: this.container,
           autoplay: false,
@@ -181,13 +190,8 @@
           video: {
             quality: [
               {
-                name: 'HD',
-                url: 'https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8',
-                type: 'customHls'
-              },
-              {
-                name: 'SD',
-                url: 'https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8',
+                name: 'Live',
+                url: this.videoUrl,
                 type: 'customHls'
               }
             ],
@@ -288,7 +292,6 @@
       }
     }
 
-    // Initialize player
     const videoPlayer = new VideoPlayer();
   </script>
 </body>
