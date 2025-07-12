@@ -168,10 +168,7 @@
       }
 
       init() {
-        if (!this.videoUrl) {
-          alert("No video URL found in ?sportssnap= parameter.");
-          return;
-        }
+        if (!this.videoUrl) return;
 
         this.player = new DPlayer({
           container: this.container,
