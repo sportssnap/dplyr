@@ -34,10 +34,10 @@
     const urlParams = new URLSearchParams(window.location.search);
     const key = urlParams.get('sportssnap');
 
-    fetch('https://sportssnap.github.io/stream/l.html')
-      .then(res => res.json())
-      .then(mapping => {
-        const videoUrl = mapping[key];
+    fetch('https://sportssnap.github.io/stream/l.json')
+      .then(response => response.json())
+      .then(data => {
+        const videoUrl = data[key];
         if (!videoUrl) {
           document.body.innerHTML = `<h2 style="color:white;text-align:center;">No video found for: ${key}</h2>`;
           return;
@@ -52,12 +52,12 @@
           volume: 0.8,
           video: {
             url: videoUrl,
-            type: 'customHls',
+            type: 'customHls'
           }
         });
 
         dp.options.video.customType = {
-          customHls: function (video, player) {
+          customHls: function(video, player) {
             if (Hls.isSupported()) {
               const hls = new Hls();
               hls.loadSource(video.src);
@@ -68,9 +68,9 @@
           }
         };
       })
-      .catch(err => {
-        document.body.innerHTML = `<h2 style="color:white;text-align:center;">Failed to load video list</h2>`;
-        console.error(err);
+      .catch(error => {
+        document.body.innerHTML = `<h2 style="color:white;text-align:center;">Failed to load stream list.</h2>`;
+        console.error(error);
       });
   </script>
 </body>
