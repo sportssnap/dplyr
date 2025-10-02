@@ -13,33 +13,29 @@
     }
 
     body {
-  margin: 0;
-  background: var(--bg-color);
-  font-family: sans-serif;
-  height: 100vh;
-  width: 100vw;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
+      margin: 0;
+      background: var(--bg-color);
+      font-family: sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
 
-#dplayer-container {
-  width: 100%;
-  max-width: 960px;   /* keeps a nice max size on desktop */
-  aspect-ratio: 16 / 9;
-  margin: 20px auto;
-  position: relative;
-  border-radius: 8px;
-  overflow: hidden;
-}
+    #dplayer-container {
+      width: 100%;
+      max-width: 960px;
+      margin: 20px;
+      position: relative;
+      border-radius: 8px;
+      overflow: hidden;
+    }
 
-#dplayer video {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;  /* or "contain" if you prefer black bars */
-}
-
-
+    #dplayer video {
+      width: 100%;
+      height: auto;
+      object-fit: contain;
+    }
 
     .custom-overlay {
       position: absolute;
@@ -213,5 +209,4 @@
   </script>
 </body>
 </html>
-
 
